@@ -33,7 +33,9 @@ public class homesParser {
     public static void compareToCities() {
 
         double maxCosine = -1;
-        System.out.println("Describe your ideal city and we'll match" +
+        String maxCity = "";
+
+        System.out.println("Describe your ideal city and we'll match " +
                 "you to one of the five main cities supported in this program");
 
         Scanner option = new Scanner(System.in);
@@ -47,20 +49,20 @@ public class homesParser {
             }
 
             IdfDocument query = new IdfDocument(wants);
+            documents.add(query);
             Corpus corpus = new Corpus(documents);
             VectorSpaceModel vectorSpace = new VectorSpaceModel(corpus);
 
-            for (IdfDocument doc : documents) {
-                // System.out.println("\nComparing to " + doc);
-                double similarity = vectorSpace.cosineSimilarity(query, doc);
-                maxCosine = Math.max(maxCosine, similarity);
-                if (Double.isNaN(similarity)) {
-                    System.out.println("Similarity computation returned NaN");
-                } else {
-                    System.out.println(similarity);
+            for (Map.Entry<String, IdfDocument> doc : cities.entrySet()) {
+                double similarity = vectorSpace.cosineSimilarity(query, doc.getValue());
+                if (similarity > maxCosine) {
+                    maxCosine = similarity;
+                    maxCity = doc.getKey();
                 }
             }
-        }
+        System.out.println("With a cosine similarity of " + maxCosine + " your best city is " + maxCity + "\n");
+
+    }
 
 
     private static String collectAllNeighborhood(String url) {

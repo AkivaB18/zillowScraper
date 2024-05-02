@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class main {
 
+
     public static void main (String [] args) {
         String baseUrl;
 
         System.out.println("""
-                Welcome to RedfinScraper. The goal of this application
+                Welcome to UrbanMatchExplorer. The goal of this application
                 is to be a one stop shop for identifying ideal houses and trip locations in
                 the neighborhood which best match your preferences. To begin, choose one
                 of the following 5 cities to explore
@@ -39,12 +40,12 @@ public class main {
         realtorsParser.calculateStatistics(Redfinhouses);
 
         System.out.println("""
-                \n There are now a couple of options to explore
+                \nThere are now a couple of options to explore
                 Would you like to identify a specific house which most closely
                 matches your budget and needs or would you instead like to
                 give a couple of characteristics of your ideal neighborhood
                 in the region you identified above and we'll tell you which
-                neighborhood most closely matches your preferences
+                neighborhood most closely matches your preferences:
                 """);
 
         boolean stay = true;

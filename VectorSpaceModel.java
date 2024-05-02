@@ -3,71 +3,100 @@ import java.util.Set;
 
 /**
  * This class implements the Vector-Space model.
- * It creates tf-idf vectors for each document in a corpus.
+ * It takes a corpus and creates the tf-idf vectors for each document.
+ * @author swapneel
+ *
  */
 public class VectorSpaceModel {
 
+    /**
+     * The corpus of documents.
+     */
     private Corpus corpus;
+
+    /**
+     * The tf-idf weight vectors.
+     * The hashmap maps a document to another hashmap.
+     * The second hashmap maps a term to its tf-idf weight for this document.
+     */
     private HashMap<IdfDocument, HashMap<String, Double>> tfIdfWeights;
 
+    /**
+     * The constructor.
+     * It will take a corpus of documents.
+     * Using the corpus, it will generate tf-idf vectors for each document.
+     * @param corpus the corpus of documents
+     */
     public VectorSpaceModel(Corpus corpus) {
         this.corpus = corpus;
-        tfIdfWeights = new HashMap<>();
+        tfIdfWeights = new HashMap<IdfDocument, HashMap<String, Double>>();
+
         createTfIdfWeights();
     }
 
+    /**
+     * This creates the tf-idf vectors.
+     */
     private void createTfIdfWeights() {
         Set<String> terms = corpus.getInvertedIndex().keySet();
 
-        for (IdfDocument idfDocument : corpus.getDocuments()) {
-            HashMap<String, Double> weights = new HashMap<>();
+        for (IdfDocument document : corpus.getDocuments()) {
+            HashMap<String, Double> weights = new HashMap<String, Double>();
 
             for (String term : terms) {
-                double tf = idfDocument.getTermFrequency(term);
+                double tf = document.getTermFrequency(term);
                 double idf = corpus.getInverseDocumentFrequency(term);
+
                 double weight = tf * idf;
 
                 weights.put(term, weight);
             }
-            tfIdfWeights.put(idfDocument, weights);
+            tfIdfWeights.put(document, weights);
         }
     }
 
-    private double getMagnitude(IdfDocument idfDocument) {
+    /**
+     * This method will return the magnitude of a vector.
+     * @param document the document whose magnitude is calculated.
+     * @return the magnitude
+     */
+    private double getMagnitude(IdfDocument document) {
         double magnitude = 0;
-        HashMap<String, Double> weights = tfIdfWeights.get(idfDocument);
+        HashMap<String, Double> weights = tfIdfWeights.get(document);
 
-        if (weights != null) {
-            for (double weight : weights.values()) {
-                magnitude += weight * weight;
-            }
+        for (double weight : weights.values()) {
+            magnitude += weight * weight;
         }
 
         return Math.sqrt(magnitude);
     }
 
+    /**
+     * This will take two documents and return the dot product.
+     * @param d1 Document 1
+     * @param d2 Document 2
+     * @return the dot product of the documents
+     */
     private double getDotProduct(IdfDocument d1, IdfDocument d2) {
         double product = 0;
         HashMap<String, Double> weights1 = tfIdfWeights.get(d1);
         HashMap<String, Double> weights2 = tfIdfWeights.get(d2);
 
-        if (weights1 != null && weights2 != null) {
-            for (String term : weights1.keySet()) {
-                product += weights1.get(term) * weights2.getOrDefault((Object) term, (double) 0);
-            }
+        for (String term : weights1.keySet()) {
+            product += weights1.get(term) * weights2.get(term);
         }
 
         return product;
     }
 
+    /**
+     * This will return the cosine similarity of two documents.
+     * This will range from 0 (not similar) to 1 (very similar).
+     * @param d1 Document 1
+     * @param d2 Document 2
+     * @return the cosine similarity
+     */
     public double cosineSimilarity(IdfDocument d1, IdfDocument d2) {
-        double magnitude1 = getMagnitude(d1);
-        double magnitude2 = getMagnitude(d2);
-
-        if (magnitude1 == 0 || magnitude2 == 0) {
-            return 0; // or handle in a way that suits your logic
-        }
-
-        return getDotProduct(d1, d2) / (magnitude1 * magnitude2);
+        return getDotProduct(d1, d2) / (getMagnitude(d1) * getMagnitude(d2));
     }
 }

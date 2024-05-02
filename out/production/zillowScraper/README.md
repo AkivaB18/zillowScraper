@@ -1,4 +1,27 @@
-# zillowScraper
+### NETS 1500: FINAL PROJECT (IMPLEMENTATION)
+### Names: Alexander Choi, Daniel Hwang, Akiva Berkowitz
 
-The purpose of this application is to analyze various statistics about housing on Redfin.
 
+## Project Details:
+# Program: UrbanMatch Explorer
+**Description**:
+UrbanMatch Explorer is a cutting-edge real estate analysis tool designed to offer a dynamic, user-driven property search across major U.S. cities such as Philadelphia, New York City, Chicago, Los Angeles, and Washington D.C. It utilizes advanced web scraping techniques to gather real estate data, overcoming anti-scraping barriers with an adaptive methodology that respects web security measures. In addition to property searches, UrbanMatch Explorer includes the innovative ScrapeNeighborhoods() function, which employs a tf-idf model to align neighborhood descriptions with user preferences, allowing for personalized real estate insights. Users can input their ideal neighborhood characteristics in a few words, and the program identifies the best real estate matches and relevant neighborhood routes. Through its user-friendly interface and tailored search capabilities, UrbanMatch Explorer transforms the way users engage with urban real estate markets, providing detailed summaries and optimal property matches based on specific user inputs.
+
+Our project incorporates these course themes:
+Social Networks
+Document Search (aka Information Retrieval)
+
+Work Breakdown:
+Alexander Choi: ScrapeNeighborhoods Class
+Daniel Hwang: RealtorsParser Class, Write-up
+Akiva Berkowitz: RealtorsParser Class
+
+**Changes to Proposal**:
+
+Our initial project proposal centered around developing an innovative software tool aimed at retrieving and analyzing historical data on real estate properties listed on Zillow. The envisioned functionality was to offer comprehensive insights by comparing various property features such as price, size, and number of bedrooms, providing a detailed comparative analysis that would benefit potential buyers and real estate enthusiasts. However, during the development phase, we encountered a significant challenge with Zillow’s robust anti-scraping measures, which prevented us from accessing and extracting the necessary data efficiently. This obstacle prompted our first major pivot in the project scope. After careful consideration and project reassessment, we decided to switch our data source from Zillow to RedFin, which initially appeared to have more lenient scraping restrictions, allowing us to adapt our original proposal to a new platform.
+
+With RedFin as our new data source, we modified our application to include a user-driven property search feature. This enhancement was designed to allow users to input specific search criteria and find real estate listings in Philadelphia that matched their preferences. Our parser was developed to navigate successfully through the first ten pages of listings, extracting links to individual houses effectively. This feature marked a significant milestone in our project, aligning with our goal to create a more interactive and user-centric tool. However, we soon faced another hurdle. RedFin’s anti-scraping software became more restrictive as we attempted to access more detailed information from individual property pages. This limitation impeded our ability to extract key features that were critical for a deeper comparative analysis. Faced with these technical barriers and the need to maintain project momentum, we made a strategic decision to further pivot our project.
+
+Our revised proposal now focuses on leveraging our existing capabilities to implement a user-driven search tool that not only identifies ideal residential properties but also suggests trip routes to explore neighborhoods in key metropolitan areas including Philadelphia, New York City, Chicago, Los Angeles, and Washington D.C. Based on user inputs, our application now offers summary statistics for the selected city and showcases the optimal house matching the user's specified preferences. This adaptive approach has allowed us to navigate around the scraping restrictions while still providing valuable, tailored real estate insights to our users. Each pivot and adjustment throughout this project has been a learning opportunity, guiding us towards creating a more resilient and user-friendly real estate analysis tool. Through these challenges, we have enhanced our technical skills, deepened our understanding of web security measures, and refined our ability to adapt to unforeseen obstacles in a real-world application development scenario.  An additional innovative component of our project is the ScrapeNeighborhoods() function, which integrates a text analysis feature utilizing the tf-idf model: this tool analyzes the linguistic content from the descriptions of various neighborhoods, aligning them with user-defined preferences. Users are prompted to describe their ideal neighborhood in just ten words, and our algorithm processes these descriptions to find the neighborhood that best matches their linguistic profile. This feature not only enhances the personalization of our tool but also deepens the user's engagement by aligning their textual inputs with real-world neighborhood characteristics, thus providing a uniquely tailored user experience in real estate exploration.
+
+Run the main file and follow instructions from there!

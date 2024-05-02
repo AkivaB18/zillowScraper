@@ -1,39 +1,63 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class represents a corpus of documents.
- * It creates an inverted index for these documents.
+ * It will create an inverted index for these documents.
+ * @author swapneel
+ *
  */
 public class Corpus {
 
+    /**
+     * An arraylist of all documents in the corpus.
+     */
     private ArrayList<IdfDocument> documents;
+
+    /**
+     * The inverted index.
+     * It will map a term to a set of documents that contain that term.
+     */
     private HashMap<String, Set<IdfDocument>> invertedIndex;
 
+    /**
+     * The constructor - it takes in an arraylist of documents.
+     * It will generate the inverted index based on the documents.
+     * @param documents the list of documents
+     */
     public Corpus(ArrayList<IdfDocument> documents) {
         this.documents = documents;
-        invertedIndex = new HashMap<>();
+        invertedIndex = new HashMap<String, Set<IdfDocument>>();
+
         createInvertedIndex();
     }
 
+    /**
+     * This method will create an inverted index.
+     */
     private void createInvertedIndex() {
-        // System.out.println("Creating the inverted index");
-
-        Comparator<IdfDocument> documentComparator = Comparator.naturalOrder();
-
         for (IdfDocument document : documents) {
             Set<String> terms = document.getTermList();
 
             for (String term : terms) {
-                Set<IdfDocument> docSet = invertedIndex.computeIfAbsent(term, k -> new TreeSet<>(documentComparator));
-                docSet.add(document);
+                if (invertedIndex.containsKey(term)) {
+                    Set<IdfDocument> list = invertedIndex.get(term);
+                    list.add(document);
+                } else {
+                    Set<IdfDocument> list = new TreeSet<IdfDocument>();
+                    list.add(document);
+                    invertedIndex.put(term, list);
+                }
             }
         }
     }
 
     /**
-     * Returns the IDF for a given term.
+     * This method returns the idf for a given term.
      * @param term a term in a document
-     * @return the IDF for the term
+     * @return the idf for the term
      */
     public double getInverseDocumentFrequency(String term) {
         if (invertedIndex.containsKey(term)) {
@@ -55,7 +79,7 @@ public class Corpus {
     }
 
     /**
-     * @return the inverted index
+     * @return the invertedIndex
      */
     public HashMap<String, Set<IdfDocument>> getInvertedIndex() {
         return invertedIndex;
