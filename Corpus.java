@@ -16,7 +16,7 @@ public class Corpus {
     }
 
     private void createInvertedIndex() {
-        System.out.println("Creating the inverted index");
+        // System.out.println("Creating the inverted index");
 
         Comparator<IdfDocument> documentComparator = Comparator.naturalOrder();
 

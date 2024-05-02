@@ -51,9 +51,9 @@ public class homesParser {
             VectorSpaceModel vectorSpace = new VectorSpaceModel(corpus);
 
             for (IdfDocument doc : documents) {
-                System.out.println("\nComparing to " + doc);
+                // System.out.println("\nComparing to " + doc);
                 double similarity = vectorSpace.cosineSimilarity(query, doc);
-
+                maxCosine = Math.max(maxCosine, similarity);
                 if (Double.isNaN(similarity)) {
                     System.out.println("Similarity computation returned NaN");
                 } else {
